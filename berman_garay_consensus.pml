@@ -75,7 +75,7 @@ proctype Process(byte i) {
 		find_majority(messages, V, C);
 
 		if
-		:: round == i -> send_to_all(0, round);
+		:: round == i -> send_to_all(V, round);
 		:: else -> skip;
 		fi;
 
@@ -102,13 +102,13 @@ proctype FaultyProcess(byte i) {
 	byte round = 0;
 	do
 	:: round < R ->
-		send_to_all(X, i);
+		send_to_all(X, 0);
 
 		receive_all(messages, i);
         find_majority(messages, X, C);
 
 		if
-		:: round == i -> send_to_all(1 - X, round);
+		:: round == i -> send_to_all(0, round);
 		:: else -> skip;
 		fi;
 
